@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Recommendation Systtem</title>
+    <meta charset = "ISO-8859-1" />
+       <link href="../static/css/main.css"
+          th:href="@{css/main.css}" rel="stylesheet" media="screen"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div align = "center">
+    <h1>Administration</h1>
+    <a href="/register_user"> Register New User </a>
+    <br><br>
+    <table border = "1" cellpadding = "10">
+        <thead>
+            <tr>
+                <th> username </th>
+                <th> email </th>
+                <th> Skill </th>
+                <th> Skill2 </th>
+                <th> Skill3 </th>
+                <th> Needs </th>
+                <th>Recommendations</th>              
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${users.empty}">
+                <td colspan="7"style="text-align:center"> No Users Registered </td> 
+            </tr>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.userName}"> </span></td>
+                <td><span th:text="${user.email}"> </span></td>
+                <td><span th:text="${user.skill1}"> </span></td>
+                <td><span th:text="${user.skill2}"> </span></td>
+                <td><span th:text="${user.skill3}"> </span></td>
+                
+                <td><span th:text="${user.need}"> </span></td>
+                
+                <td>
+                    <span th:each="reco: ${recommendations}" 
+                      th:if="${reco.userName} == ${user.userName}"
+                      th:text="${reco.recommendation} + ' ---'" 
+                                          
+                    ></span>             
+                </td>
+          
+                <td>
+                    <a th:href="@{/edit_user/{username}(username=${user.userName})}">Edit</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/delete_user/{username}(username=${user.userName})}">Delete</a>
+                </td>
+            
+                </td>
+            </tr> 
+
+        </tbody>
+    </table>
+</div>
+<br><br>
+
+</body>
+</html> 
